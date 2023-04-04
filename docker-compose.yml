@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  app-golang:
+    image: golang:latest
+    init: true  # run tini - https://github.com/krallin/tini
+    entrypoint: "sleep infinity"
+    volumes:
+    - go:/.go/  # go
+    - go_cache:/.gocache/  # go cache
+    - ./src:/sources/src:cached
+    working_dir: /sources/src
+    networks:
+    - vpcbr
+  app-python:
+    image: python:latest
+    init: true # run tini - http://github./krallin/tini
+    entrypoint: "sleep infinity"
+    volumes:
+      - ./src:/sources/src:cached
+    working_dir: /sources/src
+    networks:
+    - vpcbr
+volumes:
+  go:
+  go_cache:
+networks:
+  vpcbr:
